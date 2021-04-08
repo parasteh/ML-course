@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 import xgboost
 
+from tune_sklearn import TuneGridSearchCV, TuneSearchCV
 
 train_df = pd.read_csv('train_df_befor_imputing.csv')
 
@@ -40,6 +41,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, train_df.VALUE_PER_UNIT, 
 xgb_model = xgboost.XGBRegressor(learning_rate =0.1, n_estimators=1000, max_depth=5,
     min_child_weight=1, gamma=0, subsample=0.8, colsample_bytree=0.8, nthread=6, scale_pos_weight=1, seed=27)
 
+
+
 #for tuning parameters
 parameters_for_testing = {
    'colsample_bytree':[0.4,0.6,0.8],
@@ -47,17 +50,27 @@ parameters_for_testing = {
    'min_child_weight':[1.5,6,10],
    'learning_rate':[0.1,0.07],
    'max_depth':[3,5],
-   'n_estimators':[10000],
+   'n_estimators':[1000],
    'reg_alpha':[1e-5, 1e-2,  0.75],
    'reg_lambda':[1e-5, 1e-2, 0.45],
    'subsample':[0.6,0.95]
 }
 
-gsearch1 = GridSearchCV(estimator = xgb_model, param_grid = parameters_for_testing, n_jobs=6,iid=False, verbose=10,scoring='neg_mean_squared_error')
-gsearch1.fit(X_train,y_train)
-print (gsearch1.grid_scores_)
+t_search = TuneSearchCV(
+    xgb_model,
+    param_distributions=parameters_for_testing,
+    n_trials=3,
+    early_stopping=True,
+    use_gpu=True
+    # Commented out for testing on github actions,
+    # but this is how you would use gpu
+)
+
+# gsearch1 = GridSearchCV(estimator = xgb_model, param_grid = parameters_for_testing, n_jobs=6,iid=False, verbose=10,scoring='neg_mean_squared_error')
+t_search.fit(X_train,y_train)
+print (t_search.grid_scores_)
 print('best params')
-print (gsearch1.best_params_)
+print (t_search.best_params_)
 print('best score')
-print (gsearch1.best_score_)
+print (t_search.best_score_)
 
