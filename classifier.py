@@ -24,14 +24,14 @@ y = y_train
 
 
 classifiers = [
-     SVR(),
+    #SVR(),
     #     SGDRegressor(),
     #      ,
     #      BayesianRidge()
     #     linear_model.LassoLars(),
     #      ARDRegression()
-    PassiveAggressiveRegressor(),
-    TheilSenRegressor(),
+    # PassiveAggressiveRegressor(),
+    # TheilSenRegressor(),
     #     LinearRegression(),
     xgboost.XGBRegressor(colsample_bytree=0.6, gamma=0.1, min_child_weight=1.5, learning_rate=0.07, max_depth=5,
                          n_estimators=1000, reg_alpha=0.01, reg_lambda=1e-05, subsample=0.95)
