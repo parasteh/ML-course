@@ -68,7 +68,7 @@ t_search = TuneSearchCV(
 
 # gsearch1 = GridSearchCV(estimator = xgb_model, param_grid = parameters_for_testing, n_jobs=6,iid=False, verbose=10,scoring='neg_mean_squared_error')
 t_search.fit(X_train,y_train)
-print (t_search.grid_scores_)
+print (t_search.scorer_)
 print('best params')
 print (t_search.best_params_)
 print('best score')
