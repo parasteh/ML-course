@@ -11,6 +11,13 @@ import numpy as np
 
 train_df = pd.read_csv('train_df_befor_imputing.csv')
 
+from scipy.stats import zscore
+z_scores = zscore(train_df)
+
+abs_z_scores = np.abs(z_scores)
+filtered_entries = (abs_z_scores < 3).all(axis=1)
+train_df = pd.DataFrame(train_df[filtered_entries])
+
 
 
 
