@@ -37,11 +37,11 @@ X = scaler.transform(X_imputed)
 X_train, X_test, y_train, y_test = train_test_split(X, train_df.VALUE_PER_UNIT, test_size=0.2, random_state=42)
 
 
-# XGBoost
-xgb_model = xgboost.XGBRegressor(learning_rate =0.1, n_estimators=1000, max_depth=5,
-    min_child_weight=1, gamma=0, subsample=0.8, colsample_bytree=0.8, nthread=6, scale_pos_weight=1, seed=27)
+# # XGBoost
+# xgb_model = xgboost.XGBRegressor(learning_rate =0.1, n_estimators=1000, max_depth=5,
+#     min_child_weight=1, gamma=0, subsample=0.8, colsample_bytree=0.8, nthread=6, scale_pos_weight=1, seed=27)
 
-
+xgb_model = xgboost.XGBRegressor()
 
 #for tuning parameters
 parameters_for_testing = {
