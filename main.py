@@ -74,3 +74,14 @@ print (t_search.best_params_)
 print('best score')
 print (t_search.best_score_)
 
+final_xgb = xgboost.XGBRegressor(colsample_bytree= 0.6, gamma= 0.1, min_child_weight= 1.5, learning_rate= 0.07, max_depth= 5, n_estimators= 1000, reg_alpha= 0.01, reg_lambda= 1e-05, subsample= 0.95)
+
+trained = final_xgb.fit(X_train,y_train)
+
+
+y_pred = best_xgb_model.predict(X_test)
+def mean_absolute_percentage_error(y_test, y_pred):
+    y_test, y_pred = np.array(y_test), np.array(y_pred)
+    return  np.mean(np.abs((y_test - y_pred) / y_test)) * 100
+print(mean_absolute_percentage_error(y_test, y_pred))
+
