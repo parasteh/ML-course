@@ -33,6 +33,7 @@ def nn_imputing(data):
   df_with_missing_imputed = datawig.SimpleImputer.complete(data)
 
   return df_with_missing_imputed
-train_knn_imputed =  knn_imputing(input_df)
+
+train_knn_imputed =  knn_imputing(onehot_df)
 
 train_knn_imputed.to_csv('final_knn_imputed.csv')
