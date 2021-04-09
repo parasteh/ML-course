@@ -13,13 +13,7 @@ train_df = pd.read_csv('X.csv')
 
 train_df = train_df.sample(5000)
 
-from scipy.stats import zscore
 
-z_scores = zscore(train_df['VALUE_PER_UNIT'])
-
-abs_z_scores = np.abs(z_scores)
-filtered_entries = (abs_z_scores < 3).all(axis=1)
-train_df = pd.DataFrame(train_df[filtered_entries])
 
 
 
