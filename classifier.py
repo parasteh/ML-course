@@ -9,10 +9,13 @@ import numpy as np
 
 
 
-train_df = pd.read_csv('train_df_befor_imputing.csv')
+train_df = pd.read_csv('X.csv')
+
+train_df = train_df.sample(5000)
 
 from scipy.stats import zscore
-z_scores = zscore(train_df)
+
+z_scores = zscore(train_df['VALUE_PER_UNIT'])
 
 abs_z_scores = np.abs(z_scores)
 filtered_entries = (abs_z_scores < 3).all(axis=1)
