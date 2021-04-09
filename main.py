@@ -10,7 +10,8 @@ import xgboost
 
 from tune_sklearn import TuneGridSearchCV, TuneSearchCV
 
-train_df = pd.read_csv('train_df_befor_imputing.csv')
+train_df = pd.read_csv('X.csv')
+
 
 
 def rf_imputing(data):
@@ -22,18 +23,19 @@ def rf_imputing(data):
   # X_imputed['VALUE_PER_UNIT'] =  data['VALUE_PER_UNIT']
   return X_imputed
 
-train_rf_imputed = rf_imputing(train_df)
+# train_rf_imputed = rf_imputing(train_df)
 
 X = train_df.drop('VALUE_PER_UNIT', axis=1)
 
-rf_imputed = pd.DataFrame(train_rf_imputed, columns=[X.columns])
-X_imputed = rf_imputed.drop(columns=[ 'Unnamed: 0'], axis= 1)
+
+# rf_imputed = pd.DataFrame(train_rf_imputed, columns=[X.columns])
+# X_imputed = rf_imputed.drop(columns=[ 'Unnamed: 0'], axis= 1)
 
 
 
 scaler = StandardScaler()
-scaler.fit(X_imputed)
-X = scaler.transform(X_imputed)
+scaler.fit(X)
+X = scaler.transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X, train_df.VALUE_PER_UNIT, test_size=0.2, random_state=42)
 
 
@@ -50,7 +52,7 @@ parameters_for_testing = {
    'min_child_weight':[1.5,6,10],
    'learning_rate':[0.1,0.07],
    'max_depth':[3,5],
-   'n_estimators':[1000],
+   'n_estimators':[10,50,100, 500, 1000],
    'reg_alpha':[1e-5, 1e-2,  0.75],
    'reg_lambda':[1e-5, 1e-2, 0.45],
    'subsample':[0.6,0.95]
@@ -79,7 +81,7 @@ final_xgb = xgboost.XGBRegressor(colsample_bytree= 0.6, gamma= 0.1, min_child_we
 trained = final_xgb.fit(X_train,y_train)
 
 
-y_pred = best_xgb_model.predict(X_test)
+y_pred = trained.predict(X_test)
 def mean_absolute_percentage_error(y_test, y_pred):
     y_test, y_pred = np.array(y_test), np.array(y_pred)
     return  np.mean(np.abs((y_test - y_pred) / y_test)) * 100

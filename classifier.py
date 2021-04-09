@@ -20,6 +20,7 @@ train_df = train_df.sample(5000)
 
 X = train_df.drop('VALUE_PER_UNIT', axis=1)
 
+
 scaler = StandardScaler()
 scaler.fit(X)
 X = scaler.transform(X)
