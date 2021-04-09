@@ -34,6 +34,8 @@ def nn_imputing(data):
 
   return df_with_missing_imputed
 
-train_knn_imputed =  knn_imputing(onehot_df)
+# train_knn_imputed =  knn_imputing(onehot_df)
 
-train_knn_imputed.to_csv('final_knn_imputed.csv')
+nn_imputed =  nn_imputing(onehot_df)
+nn_imputed.to_csv('final_nn_imputed.csv')
+# train_knn_imputed.to_csv('final_knn_imputed.csv')
