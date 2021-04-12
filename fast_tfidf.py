@@ -366,4 +366,5 @@ y_pred[y_pred <= .3] = 0
 print(y_pred)
 print(y_test)
 results = Calculate_metric(y_test, y_pred)
-results
+print("CNN: ")
+print(results)
