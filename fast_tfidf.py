@@ -230,9 +230,10 @@ X_train = np.array(dfTrain.fasttext_tfidf.to_list() + dfDev.fasttext_tfidf.to_li
 X_test = np.array(dfTest.fasttext_tfidf.to_list())
 
 #standard scale
+
 from sklearn.preprocessing import StandardScaler
 scaler =  StandardScaler()
-scaler.fit(data)
+scaler.fit(X_train)
 X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
