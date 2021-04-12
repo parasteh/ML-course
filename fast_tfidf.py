@@ -229,6 +229,12 @@ def classifier_pipline(X_train, Y_train, X_test):
 X_train = np.array(dfTrain.fasttext_tfidf.to_list() + dfDev.fasttext_tfidf.to_list())
 X_test = np.array(dfTest.fasttext_tfidf.to_list())
 
+#standard scale
+from sklearn.preprocessing import StandardScaler
+scaler =  StandardScaler()
+scaler.fit(data)
+X_train = scaler.transform(X_train)
+X_test = scaler.transform(X_test)
 
 
 y_train = np.array(dfTrain.new_label.to_list() + dfDev.new_label.to_list())
