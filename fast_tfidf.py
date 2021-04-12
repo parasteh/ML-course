@@ -233,7 +233,7 @@ X_test = np.array(dfTest.fasttext_tfidf.to_list())
 
 y_train = np.array(dfTrain.new_label.to_list() + dfDev.new_label.to_list())
 
-y_pred = classifier_pipline(X_train, y_train, X_test)
+# y_pred = classifier_pipline(X_train, y_train, X_test)
 
 
 
@@ -297,11 +297,11 @@ def Calculate_metric(y_test, y_pred):
 
 
 
-met_results = []
-for met in y_pred:
-    temp = Calculate_metric(y_test, met)
-    met_results.append(temp)
-    print(temp)
+# met_results = []
+# for met in y_pred:
+#     temp = Calculate_metric(y_test, met)
+#     met_results.append(temp)
+#     print(temp)
 
 
 
