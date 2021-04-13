@@ -23,7 +23,7 @@ from_scratch = True
 FT_VECTOR_SIZE = 300
 
 
-f = open('goemotions/data/emotions.txt')
+f = open('data/emotions.txt')
 lines  =f.readlines()
 emotions = {}
 for idx,label in enumerate(lines):
@@ -31,9 +31,9 @@ for idx,label in enumerate(lines):
 emotions
 
 
-dfTrain = pd.read_csv('goemotions/data/train.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
-dfDev = pd.read_csv('goemotions/data/dev.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
-dfTest = pd.read_csv('goemotions/data/test.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
+dfTrain = pd.read_csv('data/train.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
+dfDev = pd.read_csv('data/dev.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
+dfTest = pd.read_csv('data/test.tsv', sep = '\t', header=None, names = ['text' , 'label', 'rater'])
 data = pd.concat([dfTrain,dfTest, dfDev], ignore_index=True)
 
 
