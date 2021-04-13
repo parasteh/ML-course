@@ -41,7 +41,7 @@ data.text = data.text.apply(lambda s: s.lower() )
 
 
 keywords = set()
-with open('/content/emotions_keywords.txt') as f:
+with open('emotions_keywords.txt') as f:
     for line in f.readlines():
       keywords.add(line.strip())
 
