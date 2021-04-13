@@ -209,10 +209,10 @@ def classifier_pipline(X_train, Y_train, X_test):
     xgmodel_tuned = xgb.XGBClassifier(max_depth=20, sub_sample=0.7, colsample_bytree=0.7, eta=0.5)
     classifiers = [
         # KNeighborsClassifier(),
-        MultiOutputClassifier(svm, n_jobs=-1),
+        # MultiOutputClassifier(svm, n_jobs=-1),
         MultiOutputClassifier(xgmodel_default, n_jobs=-1),
         # MultiOutputClassifier(xgmodel_tuned, n_jobs=-1),
-        # RandomForestClassifier(max_samples=8000, max_depth=50),
+         RandomForestClassifier(max_samples=8000, max_depth=50),
         # tree.DecisionTreeClassifier(max_depth=200)
     ]
     preds = []
