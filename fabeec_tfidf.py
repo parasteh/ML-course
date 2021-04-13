@@ -1,20 +1,20 @@
 import pandas as pd
 import numpy as np
 from sentence_transformers import SentenceTransformer
-import gensim
+
 from gensim.utils import tokenize
 from gensim.models import FastText
 from gensim.models.phrases import Phrases, Phraser
 from gensim.parsing.preprocessing import remove_stopwords, strip_punctuation, strip_non_alphanum
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Embedding, Flatten, MaxPooling1D, GlobalMaxPool1D, Dropout, Conv1D
-from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
-from keras.losses import binary_crossentropy
-from keras.optimizers import Adam
-from keras.utils import to_categorical
-from keras import models
+# from keras.models import Sequential
+# from keras.layers import Dense, Activation, Embedding, Flatten, MaxPooling1D, GlobalMaxPool1D, Dropout, Conv1D
+# from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+# from keras.losses import binary_crossentropy
+# from keras.optimizers import Adam
+# from keras.utils import to_categorical
+# from keras import models
 
 
 #Config Variables
@@ -258,11 +258,17 @@ X_test = np.array(dfTest.fabeec.to_list())
 
 
 y_train = np.array(dfTrain.new_label.to_list() + dfDev.new_label.to_list())
+y_test = np.array(dfTest.new_label.to_list())
+
+np.savetxt('X_train.csv', X_train, delimiter=',')
+np.savetxt('X_test.csv', X_test, delimiter=',')
+np.savetxt('y_train.csv', y_train, delimiter=',')
+np.savetxt('y_test.csv', y_test, delimiter=',')
+
 y_pred = classifier_pipline(X_train, y_train, X_test)
 
 
 
-y_test = np.array(dfTest.new_label.to_list())
 
 
 
@@ -346,46 +352,47 @@ y_train_cnn = y_train.reshape(y_train.shape[0], y_train.shape[1])
 X_test_cnn = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 y_test_cnn = y_test.reshape(y_test.shape[0], y_test.shape[1], 1)
 
-model = Sequential()
-model.add(Conv1D(filters=128, kernel_size=3, activation='relu', input_shape = (1068, 1)))
-
-model.add(Dropout(0.2))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Conv1D(filters=64, kernel_size=3, activation='relu'))
-
-model.add(Dropout(0.2))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Conv1D(filters=32, kernel_size=3, activation='relu'))
-
-
-model.add(Dropout(0.2))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Flatten())
-model.add(Dense(100, activation='relu'))
-model.add(Dense(28, activation='sigmoid'))
-
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
-callbacks = [
-    ReduceLROnPlateau(),
-    EarlyStopping(patience=10),
-    ModelCheckpoint(filepath='model-conv1d.h5', save_best_only=True)
-]
-
-history = model.fit(X_train_cnn, y_train_cnn,
-                    epochs=200,
-                    batch_size=32,
-                    validation_split=0.1,
-                    callbacks=callbacks)
-
-
-
-
-
-y_pred = model.predict(X_test_cnn)
-
-y_pred[y_pred > .3] = 1
-y_pred[y_pred <= .3] = 0
-print(y_pred)
-print(y_test)
-results = Calculate_metric(y_test, y_pred)
-print(results)
+#
+# model = Sequential()
+# model.add(Conv1D(filters=128, kernel_size=3, activation='relu', input_shape = (1068, 1)))
+#
+# model.add(Dropout(0.2))
+# model.add(MaxPooling1D(pool_size=2))
+# model.add(Conv1D(filters=64, kernel_size=3, activation='relu'))
+#
+# model.add(Dropout(0.2))
+# model.add(MaxPooling1D(pool_size=2))
+# model.add(Conv1D(filters=32, kernel_size=3, activation='relu'))
+#
+#
+# model.add(Dropout(0.2))
+# model.add(MaxPooling1D(pool_size=2))
+# model.add(Flatten())
+# model.add(Dense(100, activation='relu'))
+# model.add(Dense(28, activation='sigmoid'))
+#
+# model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
+# callbacks = [
+#     ReduceLROnPlateau(),
+#     EarlyStopping(patience=10),
+#     ModelCheckpoint(filepath='model-conv1d.h5', save_best_only=True)
+# ]
+#
+# history = model.fit(X_train_cnn, y_train_cnn,
+#                     epochs=200,
+#                     batch_size=32,
+#                     validation_split=0.1,
+#                     callbacks=callbacks)
+#
+#
+#
+#
+#
+# y_pred = model.predict(X_test_cnn)
+#
+# y_pred[y_pred > .3] = 1
+# y_pred[y_pred <= .3] = 0
+# print(y_pred)
+# print(y_test)
+# results = Calculate_metric(y_test, y_pred)
+# print(results)
