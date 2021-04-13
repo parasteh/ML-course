@@ -228,9 +228,16 @@ X_train = np.array(dfTrain.fabeec.to_list() + dfDev.fabeec.to_list())
 X_test = np.array(dfTest.fabeec.to_list())
 
 y_train = np.array(dfTrain.new_label.to_list() + dfDev.new_label.to_list())
+y_test = np.array(dfTest.new_label.to_list())
+
+np.savetxt('X_train.csv', X_train, delimiter=',')
+np.savetxt('X_test.csv', X_test, delimiter=',')
+np.savetxt('y_train.csv', y_train, delimiter=',')
+np.savetxt('y_test.csv', y_test, delimiter=',')
+
+
 y_pred = classifier_pipline(X_train, y_train, X_test)
 
-y_test = np.array(dfTest.new_label.to_list())
 
 
 def Calculate_metric(y_test, y_pred):
